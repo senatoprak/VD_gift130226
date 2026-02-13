@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For My Maciej</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      min-height: 100dvh;
+      perspective: 1000px;
+      font: 1em/1.6 "Poppins", sans-serif;
+      overflow: hidden;
+      color: hsl(180 68% 5%);
+      background: linear-gradient(135deg, #89b8e3 0%, #fecfef 50%, #fecfef 100%);
+      background-size: 400% 400%;
+      animation: gradientAnimation 12s ease infinite;
+      position: relative;
+    }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .book {
+      position: relative;
+      display: flex;
+      margin: auto;
+      width: 42cqmin;
+      /* Increased width */
+      pointer-events: none;
+      transform-style: preserve-3d;
+      transition: translate 1s;
+      translate: calc(min(var(--c), 1) * 50%) 0%;
+      rotate: 1 0 0 30deg;
+    }
+
+    .page {
+      --thickness: 4;
+      flex: none;
+      display: flex;
+      width: 100%;
+      font-size: 2.2cqmin;
+      /* Slightly increased font size */
+      pointer-events: all;
+      user-select: none;
+      transform-style: preserve-3d;
+      transform-origin: left center;
+      transition: transform 1s,
+        rotate 1s ease-in calc((min(var(--i), var(--c)) - max(var(--i), var(--c))) * 50ms);
+      translate: calc(var(--i) * -100%) 0px 0px;
+      transform: translateZ(calc((var(--c) - var(--i) - 0.5) * calc(var(--thickness) * 0.23cqmin)));
+      rotate: 0 1 0 calc(clamp(0, var(--c) - var(--i), 1) * -180deg);
+    }
+
+    .front,
+    .back {
+      position: relative;
+      flex: none;
+      width: 100%;
+      backface-visibility: hidden;
+      overflow: hidden;
+      background-color: #ebe1e1;
+      translate: 0px;
+    }
+
+    .back {
+      translate: -100% 0;
+      rotate: 0 1 0 180deg;
+    }
+
+    .book {
+      counter-reset: page -1;
+    }
+
+    .book a {
+      color: inherit;
+    }
+
+    .page {
+      box-shadow: 0em 0.5em 1em -0.2em #287fbd20;
+    }
+
+    .front,
+    .back {
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: space-between;
+      padding: 2em;
+      border: 1px solid #0002;
+    }
+
+    .front:has(img),
+    .back:has(img) {
+      padding: 0;
+    }
+
+    .front img,
+    .back img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .front::after,
+    .back::after {
+      position: absolute;
+      bottom: 1em;
+      counter-increment: page;
+      content: counter(page) ".";
+      font-size: 0.8em;
+    }
+
+    .cover::after {
+      content: "";
+    }
+
+    .front::after {
+      right: 1em;
+    }
+
+    .front {
+      background: linear-gradient(to left, #f7f7f7 80%, #eee 100%);
+      border-radius: 0.1em 0.5em 0.5em 0.1em;
+    }
+
+    .back::after {
+      left: 1em;
+    }
+
+    .back {
+      background-image: linear-gradient(to right, #f7f7f7 80%, #eee 100%);
+      border-radius: 0.5em 0.1em 0.1em 0.5em;
+    }
+
+    .cover {
+      background: url("./cover.jpg") 50% / cover no-repeat;
+      background-color: hsl(227, 11%, 84%);
+      color: #fff;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-bottom: 1px;
+      color: hsl(0, 90%, 24%);
+    }
+
+    p {
+      margin-top: 1px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      color: hsl(0, 86%, 29%);
+    }
+
+    .front,
+    .back {
+      padding: 1.5em;
+      color: hsl(0, 89%, 39%);
+    }
+
+    .book {
+      width: 40cqmin;
+      /* Slightly increased width */
+    }
+
+    .page {
+      font-size: 2cqmin;
+      /* Slightly increased font size */
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    .front,
+    .back {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 1.5em;
+    }
+
+    h2 {
+      margin-bottom: 5px;
+    }
+
+    p {
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
+    /* Uçan saydam kalpler */
+    .floating-heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      transform: rotate(45deg);
+      animation: floatHeart 15s infinite ease-in-out;
+      z-index: 0;
+    }
+
+    .floating-heart::before,
+    .floating-heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+    }
+
+    .floating-heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .floating-heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatHeart {
+      0%, 100% {
+        transform: translateY(0) translateX(0) rotate(45deg) scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: translateY(-80px) translateX(40px) rotate(45deg) scale(1.2);
+        opacity: 0.8;
+      }
+    }
+
+    /* Sparkle effect */
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      animation: sparkle 3s infinite;
+      z-index: 1;
+    }
+
+    @keyframes sparkle {
+      0%, 100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.5);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="floating-heart" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+  <div class="floating-heart" style="left: 85%; top: 60%; animation-delay: 2s;"></div>
+  <div class="floating-heart" style="left: 50%; top: 80%; animation-delay: 4s;"></div>
+  <div class="floating-heart" style="left: 20%; top: 40%; animation-delay: 6s;"></div>
+  <div class="floating-heart" style="left: 90%; top: 30%; animation-delay: 8s;"></div>
+  <div class="floating-heart" style="left: 70%; top: 70%; animation-delay: 10s;"></div>
+
+  <div class="book">
+    <div class="page">
+      <div class="front cover">
+        <h1 style="
+              color: rgb(255, 255, 255);
+              text-shadow: 5px 2px 5px rgb(0, 0, 0);
+            ">
+          Special Messages for My Maciej🤍
+        </h1>
+
+        <p style="
+              color: rgb(255, 255, 255);
+              text-shadow: 5px 2px 5px rgb(0, 0, 0);
+            ">
+          2026<br />Special Edition 
+        </p>
+      </div>
+      <div class="back">
+        <h2>My Soul Fall In Love To You ❤️✨</h2>
+
+        <p>Some people enter our lives when we least expect it and leave an indelible mark.  You are one of those rare souls;
+         the one who makes every moment a little more special. 
+        From our first conversation, one thing caught my attention—your kindness, charm and effortless understanding of the world around you
+        your illuminating style.
+        This is not just a collection of words; it's a small way to show you how much I care.
+        To remind you that you are appreciated, admired, and truly special.
+        Therefore, in a nutshell: to our conversations, our bond, and the beautiful moments to come. 💖</p>
+      
+      </div>
+    </div>
+    <!--2nd page-->
+    <div class="page">
+      <div class="front">
+        <h2>From Two Strangers To A Special Something❤️✨</h2>
+        <p>
+          It's incredible to think I'd never met you before. Meeting you was a fateful moment I will always be grateful for.
+         At first, I didn't know how we'd connect, what we'd talk about, what kind of person you were. But now after spending time with you, I realized something truly special—
+         You are absolutely amazing. 💖
+        Your words, your kindness, and the way you make me smile have already found a place in my heart. With someone like you
+         I wasn't expecting to meet; now it's impossible not to think about you in my life.
+         Maybe it was fate, maybe just luck—but no matter what, I'm glad it brought me to you. 💕
+        </p>
+      </div>
+      <div class="back">
+        <img src="./1.jpg" alt="Img 1" />
+      </div>
+    </div>
+    <!--3rd page-->
+    <div class="page">
+      <div class="front">
+        <h2>Your Magic ✨💖</h2>
+        <p>
+          You possess a charm and a beauty that words find hard to describe. In the sparkle in your eyes,
+ in the warmth of your smile, and in your style that effortlessly illuminates every moment. Every little thing about you is so
+ Perfect, so captivating that I often wonder—
+
+ Were you created like a masterpiece?
+
+ As if the universe took its time and carefully shaped someone as wonderful as you, to make the world a little brighter. And believe me, that's exactly what you do. Every day. 💕
+
+ Your presence is like a soft melody; soothing yet unforgettable. The way you carry yourself, the goodness in your heart, and the purity in your soul make you even more special. It's not just your appearance—it's how beautiful you really are
+ who you are.
+
+ Every time I see you, I remember that some things in life are really magical; and you, without a doubt, are one of them ✨💖
+        </p>
+      </div>
+      <div class="back">
+        <h2>The Power You Have💫✨</h2>
+        <p>
+          The strength within you, which you possess and perhaps you don't even know about, is helping me survive. 
+           Thanks to you, I feel less foreign in this foreign country where I'm alone. You're like my other famil and it's like you were always.
+           In usually i'am saying how much i'am alone in here but i can't even imagine how could i be without you in here. Probably i could not survive even last summer. 
+           Maybe you think that i am not strong and maybe that's true but at least i don't feel powerless with you. 
+           And thank youy so much for sharing your power with me.. 🌟
+        </p>
+      </div>
+    </div>
+    <!--4th page-->
+    <div class="page">
+      <div class="front">
+        <h2>Best Part Of My Day 🤞💖</h2>
+        <p>
+          Talking to you has been one of the best moments of my day.  Every time I see a message from you, I can't help but smile—it's like a little spark of happiness. 
+           No matter how my day goes, our conversations make everything feel lighter and brighter.
+          Even though sometimes we argue or do not agree to eachother, i just love to apwaking with you. 
+           You have the power to make even the simplest moments special, maybe you think you do not do anything but actually you do. 
+           Every time we meet it is like our first dating, i become very excited and i can't stop myself not to smiling. 
+          I never knew a conversation, meeting a person  could mean so much; it's like that with you. 💕
+        </p>
+      </div>
+      <div class="back">
+        <img src="./2.jpg" alt="Img 1" />
+      </div>
+    </div>
+    <!--5th page-->
+    <div class="page">
+      <div class="front">
+        <h1>I Become A Child with You  💫💖</h1>
+        <p>
+
+          I can't help but laugh every time I see you. Or maybe doing something stupid. Yeah i know, sometimes i act like a child and i am sorry but you're the reason.  
+          Because you make me so happy that I often turn into a little kid around you.
+           And instead of making me uncomfortable, it makes me even happier. 
+           Probably I have infinite trust in you, and I think this is one of the things that brings out the childish side in me.💕✨
+          
+        </p>
+      </div>
+      <div class="back">
+        <h1>I Am Always With You</h1>
+        <p>
+         You are a source of inspiration to me, and I want you to know that I will always be there for you, no matter what. 
+         When you need something—someone to listen, to support, or just to make you smile—I'm just a message away.
+         My time is yours whenever you need it.
+        Life may be unpredictable, but I hope you never feel alone.
+        Whether it's a good day or a bad day, I'll always be here to encourage you and remind you how amazing you are.
+        You only deserve happiness; if I can make a small contribution to that, I would be honored. 
+        No matter where life takes us, know that there is someone who cares about you—someone who truly believes in you.💕
+        </p>
+      </div>
+    </div>
+    <!--6th page-->
+    <div class="page">
+      <div class="front">
+        <h2>Your Eyes Are My Heaven ✨💖</h2>
+        <p>
+          Maybe I told you before, but I want to say it again: your eyes are my paradise, and I'm not afraid of getting lost in them. 
+          I wanted to reserve extra space because I love their warmth and the sense of security they give me. 
+           I love you and your blue eyes so much. 
+           I like to see you when i look around. 
+           And please you also keep looking at me always.. 💖✨
+        </p>
+      </div>
+      <div class="back">
+        <h2>A Wish In My Heart✨💖</h2>
+        <p>
+          No matter what happens, I wish you a life filled with happiness, peace, and everything you deserve. Because you deserve best of everything.  💕
+          You are a soo special person, and I hope life gives you endless reasons to smile, and I can always make you laugh. 
+          No matter where we go from here, I will always be grateful for the time we shared. 
+          If fate permits, I hope I will be with you until the end of my life.
+           Because i don't know you but i just want that a lot. 
+           And i'm wishing best for our relationship.✨
+        </p>
+      </div>
+    </div>
+    <!--7th page-->
+    <div class="page">
+      <div class="front">
+        <h2>I'm Thankful To You❤</h2>
+        <p>
+          I just wanted to express for a moment how much I value you. 
+          From the very beginning, you have been truly special—someone I admire beyond words can express.
+         Your kindness, presence, and ability to make every conversation meaningful mean more to me than you realize.
+         I am grateful our paths crossed; no matter what the future holds, I will always be grateful to you.
+        Some people leave their mark on our hearts without even trying—you are one of them. 💕
+        </p>
+      </div>
+      <div class="back">
+        <h2>Will You Always Be Mine? ❤️✨</h2>
+        <p>Since the moment we started talking, you have been on my mind in the most beautiful way. Your kindness, your beauty, 
+        your energy—everything about you feels so special to me.
+         You light up my world, you make my days better, you fill my heart a little more.
+         I don't know what the future holds, but I do know one thing—I want you by my side.
+          Here is my heartfelt question but to be honest  i'm not taking "No" as an answer...
+
+                 Will you always be mine? 💖💕 </p>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="front">
+        <img src="./4.jpg" alt="Img 4" />
+      </div>
+      <div class="back cover">
+        <h3> The Cutiest Kotku In The World</h3>
+        <p>
+         
+          <br /><a href="" target="_blank" rel="nofollow"></a>
+
+          <br />
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const flipBook = (elBook) => {
+      elBook.style.setProperty("--c", 0); // Set current page
+      elBook.querySelectorAll(".page").forEach((page, idx) => {
+        page.style.setProperty("--i", idx);
+        page.addEventListener("click", (evt) => {
+          if (evt.target.closest("a")) return;
+          const curr = evt.target.closest(".back") ? idx : idx + 1;
+          elBook.style.setProperty("--c", curr);
+        });
+      });
+    };
+
+    document.querySelectorAll(".book").forEach(flipBook);
+
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.left = Math.random() * window.innerWidth + 'px';
+      sparkle.style.top = Math.random() * window.innerHeight + 'px';
+      sparkle.style.animationDelay = Math.random() * 2 + 's';
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 3000);
+    }
+    setInterval(createSparkle, 400);
+  </script>
+
+</body>
+
+</html>

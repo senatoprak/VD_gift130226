@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> For My Love Maciej - Enter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #4a74c7 0%, #fecfef 50%, #fecfef 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Uçan saydam kalpler */
+        .floating-heart {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: rgba(64, 102, 183, 0.611);
+            transform: rotate(45deg);
+            animation: floatHeart 12s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        .floating-heart::before,
+        .floating-heart::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+        }
+
+        .floating-heart::before {
+            top: -12px;
+            left: 0;
+        }
+
+        .floating-heart::after {
+            left: -12px;
+            top: 0;
+        }
+
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(0) translateX(0) rotate(45deg) scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-80px) translateX(40px) rotate(45deg) scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        #login-form {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 45px 50px;
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.5),
+                        0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out, containerFloat 3s ease-in-out infinite;
+            position: relative;
+            z-index: 10;
+            min-width: 350px;
+        }
+
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        label {
+            font-size: 24px;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: block;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: 'Dancing Script', cursive;
+            letter-spacing: 1px;
+        }
+
+        input {
+            width: 100%;
+            padding: 18px 20px;
+            margin: 15px 0;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            font-size: 18px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            color: #1b3ea7;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        input::placeholder {
+            color: rgba(255, 107, 157, 0.5);
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 1);
+            outline: none;
+            border-color: rgba(255, 107, 157, 0.8);
+            box-shadow: 0 0 20px rgba(255, 107, 157, 0.4),
+                        0 4px 15px rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff6b9d, #102666);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 20px;
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #ff8fab, #ffb3c6);
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.6);
+        }
+
+        button:active {
+            transform: scale(1.02);
+        }
+
+        button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: white;
+            font-weight: 500;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            min-height: 30px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+            z-index: 1;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-heart" style="left: 15%; top: 25%; animation-delay: 0s;"></div>
+    <div class="floating-heart" style="left: 85%; top: 65%; animation-delay: 2s;"></div>
+    <div class="floating-heart" style="left: 50%; top: 85%; animation-delay: 4s;"></div>
+    <div class="floating-heart" style="left: 25%; top: 45%; animation-delay: 6s;"></div>
+    <div class="floating-heart" style="left: 75%; top: 35%; animation-delay: 8s;"></div>
+
+    <form id="login-form">
+        <label for="code">Enter Your Name</label>
+        <input type="text" id="code" name="code" placeholder="Your Name">
+        <button id="submit-btn">
+            <span>Enter</span>
+        </button>
+    </form>
+    <div id="result"></div>
+    <script>
+        const form = document.getElementById('login-form');
+const codeInput = document.getElementById('code');
+const resultDiv = document.getElementById('result');
+
+// Kabul edilen tüm isimler
+const secretCodes = ['maciej', 'maciek'];
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const userInput = codeInput.value.trim().toLowerCase();
+
+    if (secretCodes.includes(userInput)) {
+        resultDiv.innerHTML = 'Witaj!';
+        resultDiv.style.color = '#fff';
+        resultDiv.style.fontSize = '22px';
+        resultDiv.style.fontWeight = '600';
+
+        setTimeout(() => {
+            window.location.href = 'book.html';
+        }, 1000);
+
+    } else {
+        resultDiv.innerHTML = 'This name is not correct. Only special person can enter.';
+        resultDiv.style.color = '#fff';
+        resultDiv.style.fontSize = '16px';
+        codeInput.style.borderColor = 'rgba(255, 0, 0, 0.5)';
+        codeInput.style.animation = 'shake 0.5s';
+
+        setTimeout(() => {
+            codeInput.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+            codeInput.style.animation = '';
+        }, 500);
+    }
+});
+
+        // Shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+        setInterval(createSparkle, 300);
+    </script>
+</body>
+
+</html>

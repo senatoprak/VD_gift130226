@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book is loading...</title>
+    <link rel="apple-touch-icon" href="https://codetap.org/assets/img/favicon.png">
+    <link rel="icon" type="image/png" href="https://codetap.org/assets/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1834b4 0%, #fecfef 50%, #fecfef 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Uçan saydam kalpler */
+        .floating-heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.6);
+            transform: rotate(45deg);
+            animation: floatHeart 15s infinite ease-in-out;
+        }
+
+        .floating-heart::before,
+        .floating-heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+        }
+
+        .floating-heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .floating-heart::after {
+            left: -10px;
+            top: 0;
+        }
+
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(0) translateX(0) rotate(45deg) scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-100px) translateX(50px) rotate(45deg) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            padding: 40px 50px;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.5),
+                        0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+            animation: containerFloat 3s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .loading-text {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b9d, #ff8fab, #ffb3c6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding: 15px 30px;
+            border-radius: 20px;
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+            animation: textGlow 2s ease-in-out infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .subtext {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 400;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-bar {
+            width: 280px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            overflow: hidden;
+            margin: 25px auto;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d, #ff8fab, #ffb3c6);
+            border-radius: 50px;
+            animation: load 3s ease-in-out forwards;
+            box-shadow: 0 0 15px rgba(255, 107, 157, 0.6);
+            position: relative;
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .heart {
+            width: 100px;
+            height: 100px;
+            margin-top: 25px;
+            animation: heartbeat 1.5s infinite ease-in-out;
+            filter: drop-shadow(0 0 15px rgba(25, 105, 139, 0.5));
+        }
+
+       
+
+        .next-btn {
+            background: linear-gradient(135deg, #230a7b, #ff8fab);
+            border: none;
+            padding: 15px 35px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4),
+                        0 0 0 0 rgba(255, 107, 157, 0.5);
+            margin-top: 25px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .next-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .next-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.6),
+                        0 0 0 4px rgba(255, 107, 157, 0.2);
+        }
+
+        .next-btn:active {
+            transform: scale(1.02);
+        }
+
+        .next-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-heart" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+    <div class="floating-heart" style="left: 80%; top: 60%; animation-delay: 2s;"></div>
+    <div class="floating-heart" style="left: 50%; top: 80%; animation-delay: 4s;"></div>
+    <div class="floating-heart" style="left: 20%; top: 40%; animation-delay: 6s;"></div>
+    <div class="floating-heart" style="left: 90%; top: 30%; animation-delay: 8s;"></div>
+
+    <div class="container">
+        <div class="loading-text">Book is loading...</div>
+        <div class="subtext">Get ready for your present!</div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <img class="heart" src="https://static.vecteezy.com/system/resources/thumbnails/017/419/333/small/3d-illustration-of-a-shiny-heart-symbol-of-love-and-romance-png.png" alt="Heart">
+        <button class="next-btn" onclick="window.location.href='main.html'">
+            <span>START  →</span>
+        </button>
+    </div>
+
+    <script>
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+        setInterval(createSparkle, 300);
+    </script>
+</body>
+</html>
